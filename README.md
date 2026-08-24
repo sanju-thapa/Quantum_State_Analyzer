@@ -2,11 +2,11 @@
 
 ## Overview
 
-This project is a simple **quantum state analyzer** built using Python, NumPy, and Matplotlib.
+This project is a simple **Quantum State Analyzer** built using Python, NumPy, and Matplotlib.
 
-The goal of the project is to understand how fundamental quantum-computing concepts can be represented using vectors, matrices, tensor products, probability calculations, and linear algebra.
+The main goal of this project is to understand how fundamental quantum-computing concepts can be represented using vectors, matrices, tensor products, probability calculations, and linear algebra.
 
-This project covers:
+The project covers:
 
 * Quantum state representation
 * State normalization
@@ -18,7 +18,7 @@ This project covers:
 * Tensor products
 * Identity matrices
 * Applying gates to individual qubits
-* Expectation values
+* Expectation value calculation
 * Probability visualization using Matplotlib
 
 ---
@@ -35,7 +35,7 @@ This project covers:
 
 ## 1. Creating a Quantum State
 
-A single-qubit quantum state can be represented using a NumPy array.
+A quantum state can be represented using a NumPy array.
 
 ```python
 import numpy as np
@@ -43,10 +43,10 @@ import numpy as np
 quantum_state = np.array([1, 1], dtype=complex)
 ```
 
-Initially,
+The initial state is:
 
 $$
-\psi =
+|\psi\rangle =
 \begin{bmatrix}
 1 \
 1
@@ -89,7 +89,7 @@ $$
 \end{bmatrix}
 $$
 
-or equivalently,
+This can also be written as:
 
 $$
 |\psi\rangle
@@ -109,19 +109,19 @@ norm = np.linalg.norm(quantum_state)
 quantum_normalized = quantum_state / norm
 ```
 
-The result is approximately:
+The output is approximately:
 
 ```text
-[0.70710678+0.j  0.70710678+0.j]
+[0.70710678+0.j 0.70710678+0.j]
 ```
 
 ---
 
 ## 3. Measurement Probabilities
 
-Quantum amplitudes themselves are not probabilities.
+Quantum amplitudes are not probabilities directly.
 
-The probability of measuring a particular basis state is obtained by taking the squared magnitude of its amplitude.
+The probability of measuring a basis state is calculated using the squared magnitude of its amplitude:
 
 $$
 P(i) = |\psi_i|^2
@@ -139,11 +139,13 @@ $$
 P(0) = 0.5
 $$
 
+and
+
 $$
 P(1) = 0.5
 $$
 
-Therefore,
+Therefore:
 
 $$
 P(0) + P(1) = 1
@@ -151,9 +153,9 @@ $$
 
 ---
 
-## Measurement Probability Visualization
+## 4. Measurement Probability Visualization
 
-Matplotlib is used to visualize the probability of measuring the state as `|0>` or `|1>`.
+Matplotlib is used to visualize the probabilities of measuring the state as `|0>` or `|1>`.
 
 ```python
 import matplotlib.pyplot as plt
@@ -168,7 +170,7 @@ plt.title("Quantum State Measurement Probabilities")
 plt.ylim(0, 1)
 
 plt.savefig(
-    "measurement_probabilities.png",
+    "measurement_probability.png",
     dpi=300,
     bbox_inches="tight"
 )
@@ -178,13 +180,25 @@ plt.show()
 
 ### Output
 
-![Measurement Probabilities](measurement_probabilities.png)
+![Measurement Probability](measurement_probability.png)
+
+The two equal bars represent:
+
+$$
+P(0) = 0.5
+$$
+
+and
+
+$$
+P(1) = 0.5
+$$
 
 ---
 
-## 4. Computational Basis States
+## 5. Computational Basis States
 
-The two basic single-qubit states are:
+The two single-qubit computational basis states are:
 
 $$
 |0\rangle =
@@ -213,7 +227,7 @@ state_1 = np.array([0, 1])
 
 ---
 
-## 5. Pauli-X Gate
+## 6. Pauli-X Gate
 
 The Pauli-X gate behaves similarly to a classical NOT gate.
 
@@ -236,7 +250,7 @@ X_gate = np.array([
 ])
 ```
 
-Applying it to the basis states:
+Applying it to the basis states gives:
 
 $$
 X|0\rangle = |1\rangle
@@ -257,11 +271,11 @@ print(X_gate @ state_1)
 
 ---
 
-## 6. Hadamard Gate
+## 7. Hadamard Gate
 
-The Hadamard gate creates a quantum superposition.
+The Hadamard gate is commonly used to create quantum superposition.
 
-Its matrix is:
+Its matrix representation is:
 
 $$
 H =
@@ -312,21 +326,21 @@ superposition_0 = H_gate @ state_0
 superposition_1 = H_gate @ state_1
 ```
 
-Both states give measurement probabilities:
+Both states produce the same immediate measurement probabilities:
 
 $$
 [0.5,\ 0.5]
 $$
 
-However, the relative phase between the amplitudes is different.
+However, the relative phase is different.
 
 ---
 
-## 7. Two-Qubit Basis States
+## 8. Two-Qubit Basis States
 
-Two-qubit states are created using the tensor product.
+Two-qubit states can be created using the tensor product.
 
-NumPy provides:
+In NumPy, the tensor product is calculated using:
 
 ```python
 np.kron()
@@ -383,7 +397,7 @@ state_10 = np.kron(state_1, state_0)
 state_11 = np.kron(state_1, state_1)
 ```
 
-For two qubits, the state vector contains:
+For a two-qubit system, the state vector contains:
 
 $$
 2^2 = 4
@@ -391,7 +405,7 @@ $$
 
 amplitudes.
 
-More generally, an `n`-qubit system requires:
+In general, an `n`-qubit system requires:
 
 $$
 2^n
@@ -401,7 +415,7 @@ amplitudes.
 
 ---
 
-## 8. Identity Matrix
+## 9. Identity Matrix
 
 The identity operator for a single qubit is:
 
@@ -419,23 +433,21 @@ In NumPy:
 I = np.eye(2)
 ```
 
-The identity matrix leaves a state unchanged.
+The identity matrix leaves a quantum state unchanged.
 
 ---
 
-## 9. Applying a Gate to One Qubit
+## 10. Applying a Gate to the Second Qubit
 
-For a two-qubit system, tensor products can be used to apply a gate to only one qubit.
+For a two-qubit system, we can use tensor products to apply a quantum gate to only one qubit.
 
-### Apply X to the Second Qubit
-
-The operator is:
+To apply the Pauli-X gate to the second qubit:
 
 $$
 I \otimes X
 $$
 
-In NumPy:
+Using NumPy:
 
 ```python
 IX = np.kron(I, X_gate)
@@ -443,7 +455,7 @@ IX = np.kron(I, X_gate)
 result_second = IX @ state_00
 ```
 
-This performs:
+This transformation gives:
 
 $$
 |00\rangle
@@ -451,17 +463,19 @@ $$
 |01\rangle
 $$
 
+The first qubit remains unchanged while the second qubit is flipped.
+
 ---
 
-### Apply X to the First Qubit
+## 11. Applying a Gate to the First Qubit
 
-The operator is:
+To apply the Pauli-X gate to the first qubit:
 
 $$
 X \otimes I
 $$
 
-In NumPy:
+Using NumPy:
 
 ```python
 XI = np.kron(X_gate, I)
@@ -469,7 +483,7 @@ XI = np.kron(X_gate, I)
 result_first = XI @ state_00
 ```
 
-This performs:
+This gives:
 
 $$
 |00\rangle
@@ -477,21 +491,19 @@ $$
 |10\rangle
 $$
 
-This demonstrates that the position of an operator in a tensor product determines which qubit it acts on.
+This demonstrates that the position of an operator in the tensor product determines which qubit it acts on.
 
 ---
 
-## 10. Expectation Value
+## 12. Expectation Value
 
-An expectation value represents the average value expected when measuring an observable.
-
-For an operator $A$:
+The expectation value of an observable $A$ is calculated using:
 
 $$
 \langle A \rangle
 =================
 
-\langle\psi|A|\psi\rangle
+\langle \psi | A | \psi \rangle
 $$
 
 For this project, the Pauli-Z operator is used:
@@ -523,7 +535,7 @@ expectation_value = (
 )
 ```
 
-For the state
+For the state:
 
 $$
 |\psi\rangle
@@ -532,16 +544,16 @@ $$
 \frac{1}{\sqrt{2}}
 \left(
 |0\rangle + |1\rangle
-\right),
+\right)
 $$
 
-the expectation value of $Z$ is:
+the expectation value of the Pauli-Z operator is:
 
 $$
 \langle Z \rangle = 0
 $$
 
-Expectation values are especially important in variational quantum algorithms such as **VQE — Variational Quantum Eigensolver**.
+Expectation values are especially important in variational quantum algorithms such as the **Variational Quantum Eigensolver (VQE)**.
 
 ---
 
@@ -559,13 +571,11 @@ np.eye()
 np.kron()
 ```
 
-It also uses:
+Matrix multiplication is performed using:
 
 ```python
 A @ B
 ```
-
-for matrix multiplication.
 
 For complex quantum states:
 
@@ -573,7 +583,7 @@ For complex quantum states:
 psi.conj().T
 ```
 
-calculates the conjugate transpose of a state vector.
+calculates the complex conjugate transpose of the state vector.
 
 ---
 
@@ -584,25 +594,25 @@ Quantum_State_Analyzer/
 │
 ├── main.py
 ├── README.md
-└── measurement_probabilities.png
+└── measurement_probability.png
 ```
 
 ---
 
 ## What I Learned
 
-Through this project, I learned how NumPy can be used to represent fundamental quantum-computing concepts using linear algebra.
+Through this project, I learned how NumPy can be used to implement basic quantum-computing concepts using linear algebra.
 
 The project helped me understand:
 
 * How quantum states are represented using vectors
 * Why quantum states must be normalized
-* How amplitudes are converted into probabilities
-* How quantum gates can be represented using matrices
+* How amplitudes are converted into measurement probabilities
+* How quantum gates are represented using matrices
 * How matrix multiplication changes quantum states
 * How the Hadamard gate creates superposition
-* How tensor products create multi-qubit systems
-* How identity matrices help apply gates to selected qubits
+* How tensor products are used to construct multi-qubit systems
+* How identity matrices help apply gates to individual qubits
 * How expectation values are calculated
 * How NumPy operations connect directly with quantum mechanics
 
@@ -610,26 +620,28 @@ The project helped me understand:
 
 ## Future Improvements
 
-Future versions of this project can include:
+Future improvements to this project may include:
 
 * Pauli-Y gate
-* Pauli-Z gate simulations
+* Pauli-Z gate simulation
 * Phase gates
 * CNOT gate
 * Bell-state generation
-* Entanglement
+* Quantum entanglement
 * Multiple quantum-gate sequences
+* Additional Matplotlib visualizations
 * Bloch-sphere visualization
 * Hamiltonian construction
 * Eigenvalue and eigenvector calculations
 * Ground-state energy calculations
 * Variational Quantum Eigensolver implementation
-* Comparison with Qiskit or PennyLane
+* Comparison with Qiskit
+* Comparison with PennyLane
 
 ---
 
 ## Author
 
-**R.Sanju**
+**Sanju R**
 
-Interested in quantum computing, numerical simulation, Python, and variational quantum algorithms.
+Interested in quantum computing, Python, numerical simulation, linear algebra, and variational quantum algorithms.
