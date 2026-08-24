@@ -48,7 +48,7 @@ The initial state is:
 $$
 |\psi\rangle =
 \begin{bmatrix}
-1 \
+1 \\
 1
 \end{bmatrix}
 $$
