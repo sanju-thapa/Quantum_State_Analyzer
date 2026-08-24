@@ -1,4 +1,6 @@
 import numpy as np
+import matplotlib.pyplot as plt
+
 # Step 1:
 # Create an Quantum state 
 quantum_state = np.array([1, 1], dtype=complex)
@@ -13,6 +15,17 @@ print(f"Normalized Quantum State:\n {quantum_normalized}")
 probabilities = np.abs(quantum_normalized) ** 2 
 print(f"\nMeasurement Probability: {probabilities}")
 print(f"\nTotal Probability: {np.sum(probabilities)}")
+
+# Step 2.1:
+# Visualize the Measurement Probability
+basis_states = ["|0>", "|1>"]
+plt.bar(basis_states, probabilities)
+plt.xlabel("Basis States")
+plt.ylabel("Probability")
+plt.title("Quantum State Measurement Probabilities")
+plt.ylim(0, 1)
+plt.savefig("measurement_probability.png", dpi=300, bbox_inches="tight")
+plt.show()
 
 # Step 3:
 # Define the Basis States
