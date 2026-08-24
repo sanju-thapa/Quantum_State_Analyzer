@@ -43,12 +43,13 @@ import numpy as np
 quantum_state = np.array([1, 1], dtype=complex)
 ```
 
-The initial state is:
+The initial (unnormalized) state is:
 
 $$
 |\psi\rangle =
 \begin{bmatrix}
-1 & 1
+1 \\
+1
 \end{bmatrix}
 $$
 
@@ -66,22 +67,23 @@ $$
 
 The norm of the state is:
 
-\sqrt{|1|^2 + |1|^2}
-
-\sqrt{2}
+$$
+\sqrt{|1|^2 + |1|^2} = \sqrt{2}
 $$
 
 The normalized state is:
 
+$$
 \frac{1}{\sqrt{2}}
 \begin{bmatrix}
-1 \
+1 \\
 1
 \end{bmatrix}
 $$
 
 This can also be written as:
 
+$$
 \frac{1}{\sqrt{2}}
 \left(
 |0\rangle + |1\rangle
@@ -123,13 +125,7 @@ probabilities = np.abs(quantum_normalized) ** 2
 For the current state:
 
 $$
-P(0) = 0.5
-$$
-
-and
-
-$$
-P(1) = 0.5
+P(0) = 0.5, \quad P(1) = 0.5
 $$
 
 Therefore:
@@ -170,14 +166,9 @@ plt.show()
 The two equal bars represent:
 
 $$
-P(0) = 0.5
+P(0) = 0.5, \quad P(1) = 0.5
 $$
 
-and
-
-$$
-P(1) = 0.5
-$$
 ## Measurement Probability Visualization
 
 The plot below shows the probability of measuring the quantum state as `|0>` or `|1>`.
@@ -188,21 +179,19 @@ The plot below shows the probability of measuring the quantum state as `|0>` or 
 
 ## 5. Computational Basis States
 
-The two single-qubit computational basis states are:
+The two single-qubit computational basis states are (column vectors, by convention):
 
 $$
 |0\rangle =
 \begin{bmatrix}
-1 & 0
+1 \\
+0
 \end{bmatrix}
-$$
-
-and
-
-$$
+\qquad
 |1\rangle =
 \begin{bmatrix}
-0 & 1
+0 \\
+1
 \end{bmatrix}
 $$
 
@@ -242,11 +231,7 @@ Applying it to the basis states gives:
 
 $$
 X|0\rangle = |1\rangle
-$$
-
-and
-
-$$
+\qquad
 X|1\rangle = |0\rangle
 $$
 
@@ -285,7 +270,8 @@ H_gate = (1 / np.sqrt(2)) * np.array([
 
 Applying the Hadamard gate to `|0>` gives:
 
-\frac{1}{\sqrt{2}}
+$$
+H|0\rangle = \frac{1}{\sqrt{2}}
 \left(
 |0\rangle + |1\rangle
 \right)
@@ -293,7 +279,8 @@ $$
 
 Applying the Hadamard gate to `|1>` gives:
 
-\frac{1}{\sqrt{2}}
+$$
+H|1\rangle = \frac{1}{\sqrt{2}}
 \left(
 |0\rangle - |1\rangle
 \right)
@@ -306,65 +293,41 @@ superposition_0 = H_gate @ state_0
 superposition_1 = H_gate @ state_1
 ```
 
-Both states produce the same immediate measurement probabilities:
+Both states produce the same measurement probabilities:
 
 $$
 [0.5 \quad 0.5]
 $$
 
-However, the relative phase is different.
+However, the relative phase (sign of the `|1>` amplitude) is different — this phase doesn't affect a direct measurement in the computational basis, but it matters once the state is combined with further gates or interference.
 
 ---
 
 ## 8. Two-Qubit Basis States
 
-Two-qubit states can be created using the tensor product.
-
-In NumPy, the tensor product is calculated using:
-
-```python
-np.kron()
-```
+Two-qubit states can be created using the tensor product. In NumPy, the tensor product is calculated using `np.kron()`.
 
 The four computational basis states are:
 
 $$
 |00\rangle =
 \begin{bmatrix}
-1 \
-0 \
-0 \
-0
+1 \\ 0 \\ 0 \\ 0
 \end{bmatrix}
-$$
-
-$$
+\quad
 |01\rangle =
 \begin{bmatrix}
-0 \
-1 \
-0 \
-0
+0 \\ 1 \\ 0 \\ 0
 \end{bmatrix}
-$$
-
-$$
+\quad
 |10\rangle =
 \begin{bmatrix}
-0 \
-0 \
-1 \
-0
+0 \\ 0 \\ 1 \\ 0
 \end{bmatrix}
-$$
-
-$$
+\quad
 |11\rangle =
 \begin{bmatrix}
-0 \
-0 \
-0 \
-1
+0 \\ 0 \\ 0 \\ 1
 \end{bmatrix}
 $$
 
@@ -383,9 +346,7 @@ $$
 2^2 = 4
 $$
 
-amplitudes.
-
-In general, an `n`-qubit system requires:
+amplitudes. In general, an `n`-qubit system requires:
 
 $$
 2^n
@@ -438,9 +399,7 @@ result_second = IX @ state_00
 This transformation gives:
 
 $$
-|00\rangle
-\rightarrow
-|01\rangle
+|00\rangle \rightarrow |01\rangle
 $$
 
 The first qubit remains unchanged while the second qubit is flipped.
@@ -466,9 +425,7 @@ result_first = XI @ state_00
 This gives:
 
 $$
-|00\rangle
-\rightarrow
-|10\rangle
+|00\rangle \rightarrow |10\rangle
 $$
 
 This demonstrates that the position of an operator in the tensor product determines which qubit it acts on.
@@ -477,12 +434,11 @@ This demonstrates that the position of an operator in the tensor product determi
 
 ## 12. Expectation Value
 
-The expectation value of an observable $A$ is calculated using:
+The expectation value of an observable $A$, for a state $|\psi\rangle$, is calculated using:
 
 $$
-\langle \psi | \psi \rangle 
+\langle A \rangle = \langle \psi | A | \psi \rangle
 $$
-
 
 For this project, the Pauli-Z operator is used:
 
@@ -516,7 +472,7 @@ expectation_value = (
 For the state:
 
 $$
-\frac{1}{\sqrt{2}}
+|\psi\rangle = \frac{1}{\sqrt{2}}
 \left(
 |0\rangle + |1\rangle
 \right)
@@ -528,7 +484,9 @@ $$
 \langle Z \rangle = 0
 $$
 
-Expectation values are especially important in variational quantum algorithms such as the **Variational Quantum Eigensolver (VQE)**.
+This makes sense: $|\psi\rangle$ is an equal superposition of the $Z=+1$ and $Z=-1$ eigenstates ($|0\rangle$ and $|1\rangle$), so their contributions cancel on average.
+
+Expectation values are especially important in variational quantum algorithms such as the **Variational Quantum Eigensolver (VQE)**, where the expectation value of a Hamiltonian is minimized to estimate a ground-state energy.
 
 ---
 
@@ -586,7 +544,6 @@ The project helped me understand:
 Future improvements to this project may include:
 
 * Pauli-Y gate
-* Pauli-Z gate simulation
 * Phase gates
 * CNOT gate
 * Bell-state generation
