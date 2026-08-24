@@ -48,8 +48,7 @@ The initial state is:
 $$
 |\psi\rangle =
 \begin{bmatrix}
-1 \\
-1
+1 & 1
 \end{bmatrix}
 $$
 
@@ -194,8 +193,7 @@ The two single-qubit computational basis states are:
 $$
 |0\rangle =
 \begin{bmatrix}
-1 \
-0
+1 & 0
 \end{bmatrix}
 $$
 
@@ -204,8 +202,7 @@ and
 $$
 |1\rangle =
 \begin{bmatrix}
-0 \
-1
+0 & 1
 \end{bmatrix}
 $$
 
@@ -227,7 +224,7 @@ Its matrix representation is:
 $$
 X =
 \begin{bmatrix}
-0 & 1 \
+0 & 1 \\
 1 & 0
 \end{bmatrix}
 $$
@@ -272,7 +269,7 @@ $$
 H =
 \frac{1}{\sqrt{2}}
 \begin{bmatrix}
-1 & 1 \
+1 & 1 \\
 1 & -1
 \end{bmatrix}
 $$
@@ -312,7 +309,7 @@ superposition_1 = H_gate @ state_1
 Both states produce the same immediate measurement probabilities:
 
 $$
-[0.5,\ 0.5]
+[0.5 \quad 0.5]
 $$
 
 However, the relative phase is different.
@@ -405,7 +402,7 @@ The identity operator for a single qubit is:
 $$
 I =
 \begin{bmatrix}
-1 & 0 \
+1 & 0 \\
 0 & 1
 \end{bmatrix}
 $$
@@ -483,15 +480,16 @@ This demonstrates that the position of an operator in the tensor product determi
 The expectation value of an observable $A$ is calculated using:
 
 $$
-\langle\psi|A|\psi\range
+\langle \psi | \psi \rangle 
 $$
+
 
 For this project, the Pauli-Z operator is used:
 
 $$
 Z =
 \begin{bmatrix}
-1 & 0 \
+1 & 0 \\
 0 & -1
 \end{bmatrix}
 $$
@@ -517,6 +515,7 @@ expectation_value = (
 
 For the state:
 
+$$
 \frac{1}{\sqrt{2}}
 \left(
 |0\rangle + |1\rangle
