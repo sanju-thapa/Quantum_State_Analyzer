@@ -179,6 +179,11 @@ and
 $$
 P(1) = 0.5
 $$
+## Measurement Probability Visualization
+
+The plot below shows the probability of measuring the quantum state as `|0>` or `|1>`.
+
+![Measurement Probability](measurement_probability.png)
 
 ---
 
